@@ -1,0 +1,10 @@
+{# templates/test/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+<a href="{{ path('blog_show', { 'slug': "bon" }) }}">
+    Testing show() method from BlogController with a real article s slug.
+</a>
+<br>
+<a href="{{ path('blog_index') }}">
+    Testing index() method from BlogController to view all articles.
+</a>
