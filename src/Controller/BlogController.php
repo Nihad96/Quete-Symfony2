@@ -12,8 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
-use Doctrine\Common\Persistence\ObjectRepository;
-use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\CategoryType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlogController extends AbstractController
 {
@@ -21,10 +22,10 @@ class BlogController extends AbstractController
     /**
      * Show all row from article's entity
      *
-     * @Route("/", name="blog_index")
+     * @Route("/category", name="blog_index")
      * @return Response A response instance
      */
-    public function index() : Response
+    public function index(Request $request) : Response
     {
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -36,11 +37,42 @@ class BlogController extends AbstractController
             );
         }
 
+        /**return $this->render(
+         * 'blog/index.html.twig',
+         * ['articles' => $articles]
+         * ); */
+
+
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $category=$form->getData();
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+        }
+
+
         return $this->render(
-            'blog/index.html.twig',
-            ['articles' => $articles]
+            'blog/index.html.twig', [
+                'articles' => $articles,
+                'form' => $form->createView(),
+            ]
         );
     }
+
+        public function configureOptions(OptionsResolver $resolver)
+             {
+            $resolver->setDefaults([
+                'data_class' => Category::class,
+            ]);
+        }
+
+
+
 
     /**
      * Getting a article with a formatted slug for title
