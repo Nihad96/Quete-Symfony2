@@ -161,6 +161,16 @@ class BlogController extends AbstractController
 
     public function createArticle(Request $request) : Response
     {
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findAll();
+
+        if (!$articles) {
+            throw $this->createNotFoundException(
+                'No article found in article\'s table.'
+            );
+        }
+
         $article = new Article();
         $form = $this->createForm(
             ArticleType::class,
@@ -173,12 +183,19 @@ class BlogController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
+
+            return $this->redirectToRoute('blog_create_article');
         }
+
+
 
         return $this->render(
             'blog/createArticle.html.twig', [
+                'articles'=>$articles,
                 'form' => $form->createView(),
             ]
         );
+
+
     }
 }
