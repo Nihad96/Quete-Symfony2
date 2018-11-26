@@ -14,6 +14,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CategoryType;
+use App\Form\ArticleType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlogController extends AbstractController
@@ -22,7 +23,7 @@ class BlogController extends AbstractController
     /**
      * Show all row from article's entity
      *
-     * @Route("/category", name="blog_index")
+     * @Route("/articles", name="blog_index")
      * @return Response A response instance
      */
     public function index(Request $request) : Response
@@ -153,4 +154,31 @@ class BlogController extends AbstractController
     }
 
 
+    /**
+     * @return Response
+     * @Route("blog/create-article", name="blog_create_article")
+     */
+
+    public function createArticle(Request $request) : Response
+    {
+        $article = new Article();
+        $form = $this->createForm(
+            ArticleType::class,
+            $article
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+        }
+
+        return $this->render(
+            'blog/createArticle.html.twig', [
+                'form' => $form->createView(),
+            ]
+        );
+    }
 }
