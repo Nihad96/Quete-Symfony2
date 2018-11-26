@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello !{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}{% endblock %}
 
 {% block body %}
-    <ul>
-    {% for article in articles %}
-        <li>{{ category.article }}</li>
-    {% endfor %}
-    </ul>
+    <div style="text-align: center">
+    <h1>Welcome to my blog !</h1>
+        <h2>Click on Bob to display articles or create a new one ! </h2>
+        <h2>Click on Patrick to display categories or create a new one ! </h2>
+    <a style="margin-right:50px;" href="{{ path('blog_create_article') }}"><img src="https://vignette.wikia.nocookie.net/king-harkinian/images/4/47/Spongebob.png/revision/latest?cb=20170518185222"> </a>
+    <a href="{{ path('blog_create_category') }}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/Patrick_Star.png/220px-Patrick_Star.png" style="width: 8%"></a>
+        <br>
+</div>
 {% endblock %}
+

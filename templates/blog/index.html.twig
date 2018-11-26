@@ -1,13 +1,27 @@
 {# templates/blog/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Create a category{% endblock %}
 
 {% block stylesheets %}{% endblock %}
-
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
+    <a href="{{ path('homepage') }}">
+        Back to homepage.
+    </a>
+    <div style="text-align: center">
+    <h1>Create a category</h1>
+
+    {{ form_start(form) }}<br>
+    {{ form_row(form.name) }}<br>
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
+        <hr>
+
+    <h1>All categories : </h1>
+    {% for category in categories %}
+    <h2><a href="{{ path('blog_show_all_by_category', {category : category.name}) }}"> {{ category.name }}</a></h2>
+    {% endfor %}
+    </div>
+
+
 {% endblock %}

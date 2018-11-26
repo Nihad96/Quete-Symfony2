@@ -23,27 +23,11 @@ class BlogController extends AbstractController
     /**
      * Show all row from article's entity
      *
-     * @Route("/articles", name="blog_index")
+     * @Route("/blog/categories", name="blog_create_category")
      * @return Response A response instance
      */
     public function index(Request $request) : Response
     {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findAll();
-
-        if (!$articles) {
-            throw $this->createNotFoundException(
-                'No article found in article\'s table.'
-            );
-        }
-
-        /**return $this->render(
-         * 'blog/index.html.twig',
-         * ['articles' => $articles]
-         * ); */
-
-
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -56,10 +40,19 @@ class BlogController extends AbstractController
             $em->flush();
         }
 
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+
+        if (!$categories) {
+            throw $this->createNotFoundException(
+                'No categories found in categorie\'s table.'
+            );
+        }
 
         return $this->render(
             'blog/index.html.twig', [
-                'articles' => $articles,
+                'categories' => $categories,
                 'form' => $form->createView(),
             ]
         );
@@ -80,7 +73,7 @@ class BlogController extends AbstractController
      *
      * @param string $slug The slugger
      *
-     * @Route("/{slug<^[a-z0-9-]+$>}",
+     * @Route("/blog/article/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
      *  @return Response A response instance
@@ -166,9 +159,7 @@ class BlogController extends AbstractController
             ->findAll();
 
         if (!$articles) {
-            throw $this->createNotFoundException(
-                'No article found in article\'s table.'
-            );
+            echo    'No article found in article\'s table.';
         }
 
         $article = new Article();
@@ -198,4 +189,14 @@ class BlogController extends AbstractController
 
 
     }
+
+    /**
+     * @Route("/article/{id}", name="article_show")
+     */
+    public function showArticle(Article $article) :Response
+    {
+        return $this->render('blog/article.html.twig', ['article'=>$article]);
+    }
+
+
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('homepage') }}">
+        Back to homepage.
+    </a>
+    <h1>The category {{ category.name }} </h1>
+{% endblock %}
