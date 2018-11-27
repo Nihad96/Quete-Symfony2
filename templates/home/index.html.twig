@@ -5,14 +5,26 @@
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-    <div style="text-align: center">
+    <div class="container d-flex" style="text-align: center;">
     <h1>Welcome to my blog !</h1>
-        <h2>Click on Bob to display articles or create a new one ! </h2>
-        <h2>Click on Patrick to display categories or create a new one ! </h2>
-        <h2>Click on Squidward to display tags !</h2>
+        <h1>Part 1 : Doctrine mode</h1>
+        <h2>Click on Spongebob Squarepants to display articles or create a new one ! </h2>
+        <h2>Click on Patrick Star to display categories or create a new one ! </h2>
     <a style="margin-right:50px;" href="{{ path('blog_create_article') }}"><img src="https://vignette.wikia.nocookie.net/king-harkinian/images/4/47/Spongebob.png/revision/latest?cb=20170518185222"> </a>
     <a href="{{ path('blog_create_category') }}"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/Patrick_Star.png/220px-Patrick_Star.png" style="width: 8%"></a>
         <br>
-</div>
+        <hr>
+        <hr>
+
+        <h1>Part 2 : Crud mode</h1>
+        <h2>Click on Sheldon Plankton to Create/Read/Update/Delete Categories !</h2>
+        <h2>Click on Captain Krabs to Create/Read/Update/Delete Articles !</h2>
+        <h2>Click on Squidward Tentacles to Create/Read/Update/Delete Tags !</h2>
+
+        <a href="{{ path('category_index') }}"><img src="https://vignette.wikia.nocookie.net/bob-leponge/images/1/1f/Bob_l%27%C3%A9ponge_Plankton.png/revision/latest?cb=20170310013607&path-prefix=fr" style="width: 9%"></a>
+        <a href="{{ path('article_index') }}"><img src="http://s1.e-monsite.com/2008/09/21/593048882z7esf-krabs-png.png" style="width: 12%"></a>
+        <a href="{{ path('tag_index') }}"><img src="https://vignette.wikia.nocookie.net/bob-leponge/images/3/3d/Bob_l%27%C3%A9ponge_Carlo_Tentacule.png/revision/latest?cb=20170310012621&path-prefix=fr" style="width: 6%"></a>
+
+    </div>
 {% endblock %}
 
