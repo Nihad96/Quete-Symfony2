@@ -9,4 +9,13 @@
         Back to homepage.
     </a>
     <h1>The article {{ article.title }} </h1>
+
+    <strong>Tags :</strong>
+    <ul>
+        {% for tag in article.tags %}
+            <li>{{ tag.name }} </li>
+        {% else %}
+            <li>No tags for this article</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

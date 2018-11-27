@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CategoryType;
 use App\Form\ArticleType;
@@ -193,10 +194,19 @@ class BlogController extends AbstractController
     /**
      * @Route("/article/{id}", name="article_show")
      */
-    public function showArticle(Article $article) :Response
+    public function showArticle(Article $article) : Response
     {
         return $this->render('blog/article.html.twig', ['article'=>$article]);
     }
 
+    /**
+     * @return Response
+     * @Route("{name}", name="show_all_by_tag")
+     */
+
+    public function showAllByTag(Tag $tag) : Response
+    {
+        return $this->render('blog/tag.html.twig', ['tag' => $tag]);
+    }
 
 }
