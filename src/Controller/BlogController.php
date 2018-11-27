@@ -191,6 +191,16 @@ class BlogController extends AbstractController
 
     }
 
+
+    /**
+     * @Route("/category/{id}", name="category_show")
+     */
+    public function showCategory(Category $category) :Response
+    {
+        return $this->render('blog/categoryById.html.twig', ['category'=>$category]);
+    }
+
+
     /**
      * @Route("/article/{id}", name="article_show")
      */
